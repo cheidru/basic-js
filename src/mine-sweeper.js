@@ -28,21 +28,28 @@ function minesweeper(matrix) {
   let filedHeight = matrix.length;
   let result = [];
   for (let i = 0; i < filedHeight; i++) {
-    result[i].fill(0, fieldWidth);
+    result[i] = new Array(fieldWidth)
+    result[i].fill(0);
   }
 
-  for (let i = 0; i < fieldWidth; i++) {
-    for (let j = 0; j < filedHeight; j++) {
+  for (let i = 0; i < filedHeight; i++) {
+    for (let j = 0; j < fieldWidth; j++) {
 
       if (matrix[i][j] == true) {
-        if (i > 0 && i < fieldWidth - 1) {
-          result[i - 1][j] += 1;
-          if (j > 0) result[i - 1][j - 1] += 1;
-          if (j < filedHeight - 1) result[i - 1][j + 1] += 1;
-        }
+        if (i > 0 && j > 0) result[i - 1][j - 1] += 1;
+        if (j > 0) result[i][j - 1] += 1;
+        if (i < fieldWidth - 1 && j > 0) result[i + 1][j - 1] += 1;
+
+        if (i > 0) result[i - 1][j] += 1;
+        if (i < fieldWidth - 1) result[i + 1][j] += 1;
+
+        if (i > 0 && j < filedHeight - 1) result[i - 1][j + 1] += 1;
+        if (j < filedHeight - 1) result[i][j + 1] += 1;
+        if (i < fieldWidth - 1 && j < filedHeight - 1) result[i + 1][j + 1] += 1;
       }
     }
   }
+  return result;
 }
 
 module.exports = {
